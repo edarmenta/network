@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!-- Cars in a City Center using the SpaceGraph. -->
+<universe>
+  <dimx>560.0</dimx>
+  <dimy>560.0</dimy>
+
+  <!-- This is for comment -->
+
+  <!--  <seed>11</seed> -->
+  <!-- <extension class="de.uni_stuttgart.informatik.canu.mobisim.extensions.NSOutput" output="ns_trace.txt"/> --> 
+  <!--  <extension class="de.uni_stuttgart.informatik.canu.mobisim.extensions.LoaderOutput" output="loader_trace.txt"/> -->
+  <!--  <extension class="de.uni_stuttgart.informatik.canu.mobisim.extensions.DebugOutput" output="debug_trace.txt"/> -->
+
+<!-- IT CREATES THE TRACE -->  
+<extension class="de.uni_stuttgart.informatik.canu.mobisim.extensions.ReportNodeMobility" output="mobility_trace.txt"> <step>1.0</step> </extension>
+
+<!-- SIMULATION TIME -->  
+<extension class="de.uni_stuttgart.informatik.canu.mobisim.simulations.TimeSimulation" param="100.0"/>
+
+<!-- SIMULTION SPACE -->
+<extension name="SpatialModel" class="de.uni_stuttgart.informatik.canu.spatialmodel.core.SpatialModel" min_x="0" max_x="560" min_y="0" max_y="560" traffic_light="UserTrafficLight">
+	<max_traffic_lights>0</max_traffic_lights>
+	<reflect_directions>false</reflect_directions>
+	<number_lane full="true" max="0" dir="true">2</number_lane>
+</extension>
+
+<extension name="TrafficLight" class="eurecom.spatialmodel.extensions.TrafficLight" step="10000"/>
+
+
+
+
+<extension class="eurecom.usergraph.UserGraph"> 
+
+<vertex><id>0</id> <x>280</x> <y>280</y> </vertex> 
+<vertex><id>1</id> <x>280</x> <y>0</y> </vertex> 
+<vertex><id>2</id> <x>560</x> <y>280</y> </vertex> 
+<vertex><id>3</id> <x>280</x> <y>560</y> </vertex> 
+<vertex><id>4</id> <x>0</x> <y>280</y> </vertex>  
+
+<edge> <id>1</id> <v1>0</v1> <v2>1</v2> <speed>15</speed> </edge> 
+<edge> <id>2</id> <v1>0</v1> <v2>2</v2> <speed>15</speed> </edge> 
+<edge> <id>3</id> <v1>0</v1> <v2>3</v2> <speed>15</speed> </edge> 
+<edge> <id>4</id> <v1>0</v1> <v2>4</v2> <speed>15</speed> </edge> 
+
+</extension>
+
+<extension name="PosGen" class="de.uni_stuttgart.informatik.canu.tripmodel.generators.RandomInitialPositionGenerator"/>
+
+<extension name="TripGen" class="de.uni_stuttgart.informatik.canu.tripmodel.generators.RandomTripGenerator" >
+    	<reflect_directions>false</reflect_directions>
+	<minstay>0</minstay> <maxstay>0</maxstay>
+</extension>
+<nodegroup n="4">
+    	<extension class="polito.uomm.IDM_LC" initposgenerator="PosGen" tripgenerator="TripGen">
+      		<minspeed>8.3</minspeed>
+      		<maxspeed>16.6</maxspeed>
+      		<step>0.1</step>
+		<!--<b>0.5</b>-->
+    	</extension>
+</nodegroup>
+<!--<nodegroup n="20">
+    	<extension class="polito.uomm.IDM_LC" initposgenerator="PosGen" tripgenerator="TripGen">
+      		<minspeed>5.0</minspeed>
+      		<maxspeed>10.0</maxspeed>
+      		<step>0.1</step>
+		<b>0.3</b>
+    	</extension>
+</nodegroup>-->
+
+
+  
+<extension class="de.uni_stuttgart.informatik.canu.mobisimadd.extensions.GUI">
+    	<width>640</width>
+    	<height>640</height>
+    	<step>1</step>
+</extension>
+
+<!-- <extension class="de.uni_stuttgart.informatik.canu.spatialmodel.extensions.DumpSpatialModel" output="dumped_graph.fig"/> -->
+</universe>
