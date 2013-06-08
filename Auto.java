@@ -39,7 +39,7 @@ public class Auto {
     int position=0;
     double arreglo=0;
     double t=0;
-    double T=3600;
+    double T=1; // (minuto)
     double I=0;
     double s=0;
     
@@ -52,6 +52,7 @@ public class Auto {
     ArrayList Nohandovers = new ArrayList();
     ArrayList probabilityNoH = new ArrayList();
     ArrayList<Integer> callxcell = new ArrayList();
+    ArrayList poissontimes = new ArrayList();
     
     
     public boolean handsolpicX0=false;
@@ -300,7 +301,7 @@ public class Auto {
          tiempores = tresol.sample();
      }
      
-     public void setCalls(double landa)
+     public void setCalls(double landa, ArrayList list, int counter)
      {
           //while(counter<callquan)//ciclo para asignacion de llamadas
             //{
@@ -316,17 +317,32 @@ public class Auto {
                 
                 if (incomingcall==true)
                 {
-                    arreglo= r.nextDouble(); //asignacion de un numero aleatorio entre 0 y 1 			
-                    t=t-landa * Math.log(arreglo); //formula para generar el proceso poisson
-
+                    //System.out.println();
+                    arreglo= r.nextDouble(); //asignacion de un numero aleatorio entre 0 y 1 	
+                    //System.out.println("Numero aleatorio: " + arreglo);
+                    //System.out.println("t = " + t + " - math = " + (landa * Math.log(arreglo)));
+                    
+                    // Check that the sum won't exceed the limit of 1, otherwise, redo the calculation so this condition is always met
+                    while ( t-(landa * Math.log(arreglo)) >= 1 ) {
+                        arreglo = r.nextDouble();
+                    }
+                    // t will always be less than 1
+                    t=t-(landa * Math.log(arreglo)); //formula para generar el proceso poisson
+                    
+                    //System.out.println("t: " + t + " < " + T);
                     if(t<T && incomingcall==true) //comparacion del cada valor en cada i contra la ventana de tiempo para poisson
                     {
                             I=I+1; // asigna y acumula el numero de enventos
                             s=t; // asigna el tiempo del evento mas reciente a s
                             bettime=s;
+                            //poissontimes.add(s + " " + I);
+                            list.add(s + " " + counter);
+                            
                     }
+                    
+                    
                 }
-            //}
+            
      }
      
      

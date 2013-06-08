@@ -829,10 +829,6 @@ catch(Exception e)
     private java.awt.Canvas canvas1;
     private java.awt.Canvas canvas2;
     private java.awt.Canvas canvas3;
-    private java.awt.Canvas canvas4;
-    private java.awt.Canvas canvas5;
-    private java.awt.Canvas canvas6;
-    private java.awt.Canvas canvas7;
     private java.awt.Canvas canvas8;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -861,16 +857,12 @@ catch(Exception e)
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane5;

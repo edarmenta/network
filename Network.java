@@ -35,17 +35,18 @@
 
     {
 
-        double landa = 0.001; // landa para la distribucion poisson dada para el arrivo de eventos
+        double landa = 0.2; // landa para la distribucion poisson dada para el arrivo de eventos
         double mediaexptc =360; // segundos
         
         
         int autos = 4;
         int totalines = 404;
-        int callquan=1; //call quantity for choosing a random position to address a call
+        int callquan=5; //call quantity for choosing a random position to address a call
         double standardeviation = 0.1;
         int availchannel = 1;
         int lineas = 0;
         
+        int i=0;
         double velmediagral = 0;
         double mediatransit = 0;
         double mediaresol1 = 0;
@@ -168,18 +169,19 @@
         String temp[] = new String[5]; // asignacion de memoria y creacion de un arreglo de 5 lineas de cadena de caracteres
         float XY[][]=new float[totalines][6]; // asignacion de memoria y creacion de una matriz de numero de usuarios por 5 columnas
         Auto arregloautos [] = new Auto[autos]; 
-        Auto arregloautos2 [] = new Auto[10];int i=0;
+        Auto arregloautos2 [] = new Auto[10];
         double velocidad [][] = new double [autos][4]; // vector para almacenar los tiempos de zona de handover por cada auto en 10 puntos de tiempo y posicion 11 son los promedios de tiempo
-        
+        //ArrayList poissontimes = new ArrayList();
         
         File f = new File("C:/Users/xthO/Desktop/Edson/ant/jar/mobility_trace.txt");// asignacion de espacio en memoria para un objeto tipo FILE, se inicia el const con un archivo txt
-        File f2 = new File("C:/Users/xthO/Desktop/Edson/ant/jar/calltimetable.xls");
-        File f3 = new File("C:/Users/xthO/Desktop/Edson/ant/jar/avetime20.xls");
-        File f4 = new File("C:/Users/xthO/Desktop/Edson/ant/jar/avetimetr.xls");
-        File f5 = new File("C:/Users/xthO/Desktop/Edson/ant/jar/velocidades.xls");
-        File f6 = new File("C:/Users/xthO/Desktop/Edson/ant/jar/handoverrequest.xls");
+        File f2 = new File("C:/Users/xthO/Desktop/Edson/ant/jar/Calltimetable.xls");
+        File f3 = new File("C:/Users/xthO/Desktop/Edson/ant/jar/Avetime20.xls");
+        File f4 = new File("C:/Users/xthO/Desktop/Edson/ant/jar/Avetimetr.xls");
+        File f5 = new File("C:/Users/xthO/Desktop/Edson/ant/jar/Velocidades.xls");
+        File f6 = new File("C:/Users/xthO/Desktop/Edson/ant/jar/Handoverrequest.xls");
         File f7 = new File("C:/Users/xthO/Desktop/Edson/ant/jar/probability.xls");
         File f8 = new File("C:/Users/xthO/Desktop/Edson/ant/jar/Nohandovers.xls");
+        File f9 = new File("C:/Users/xthO/Desktop/Edson/ant/jar/Poissontimes.xls");
         FileWriter fw2 = new FileWriter(f2);
         FileWriter fw3 = new FileWriter(f3);
         FileWriter fw4 = new FileWriter(f4);
@@ -187,6 +189,7 @@
         FileWriter fw6 = new FileWriter(f6);
         FileWriter fw7 = new FileWriter(f7);
         FileWriter fw8 = new FileWriter(f8);
+        FileWriter fw9 = new FileWriter(f9);
         FileReader fr = new FileReader(f); // asignacion de memoria para un objeto tipo FILE READER se inicia el const con objeto tipo FILE (f)
         BufferedReader bf = new BufferedReader(fr); // asignacion de memoria para un objeto tipo bufferreader, se inicia el cont con el objeto tipo FILE READER (fr)
         
@@ -499,121 +502,32 @@
                 
                for(celllist=0; celllist<9; celllist++)
                {
+                   counter1 = 0;
                     if (arregloautos2[celllist].callxcell.size()>0)
                     {
-                        switch(celllist)
+                        if (arregloautos2[celllist].callxcell.size() > 1)
+                            System.out.println();
+                            
+                        ArrayList lst = new ArrayList();
+                        while(counter1<callquan)//ciclo para asignacion de llamadas
+                        {                                                                          
+                            callposition.setPosition(arregloautos2[celllist].callxcell.size()); //establecer posicion
+                            position = callposition.getPosition();//guarda la posicion 
+                            arregloautos[arregloautos2[celllist].callxcell.get(position)].setCalls(landa, lst, counter1+1);                            
 
-                         {
-                             case 0:
-
-                                 while(counter0<callquan)//ciclo para asignacion de llamadas
-                                 {
-                                     callposition.setPosition(arregloautos2[0].callxcell.size()); //establecer posicion
-                                     position = callposition.getPosition();//guarda la posicion                     
-                                     arregloautos[arregloautos2[0].callxcell.get(position)].setCalls(landa);
-
-                                     counter0++;
-                                                               
-                                 }
-                                 break;
-                            case 1:
-
-                                 while(counter1<callquan)//ciclo para asignacion de llamadas
-                                 {
-                                     callposition.setPosition(arregloautos2[1].callxcell.size()); //establecer posicion
-                                     position = callposition.getPosition();//guarda la posicion                     
-                                     arregloautos[arregloautos2[1].callxcell.get(position)].setCalls(landa);
-
-                                     counter1++;
-                                                               
-                                 }
-                                 break;
-
-                             case 2:
-                                 while(counter2<callquan)//ciclo para asignacion de llamadas
-                                 {
-                                     callposition.setPosition(arregloautos2[2].callxcell.size()); //establecer posicion
-                                     position = callposition.getPosition();//guarda la posicion                     
-                                     arregloautos[arregloautos2[2].callxcell.get(position)].setCalls(landa);
-
-                                     counter2++;
-
-                                 }
-                                 break;
-                             case 3:
-                                  while(counter3<callquan)//ciclo para asignacion de llamadas
-                                 {
-                                     callposition.setPosition(arregloautos2[3].callxcell.size()); //establecer posicion
-                                     position = callposition.getPosition();//guarda la posicion                     
-                                     arregloautos[arregloautos2[3].callxcell.get(position)].setCalls(landa);
-
-                                     counter3++;
-
-                                 }
-                                 break;
-                             case 4:
-                                  while(counter4<callquan)//ciclo para asignacion de llamadas
-                                 {
-                                     callposition.setPosition(arregloautos2[4].callxcell.size()); //establecer posicion
-                                     position = callposition.getPosition();//guarda la posicion                     
-                                     arregloautos[arregloautos2[4].callxcell.get(position)].setCalls(landa);
-
-                                     counter4++;
-
-                                 }
-                                 break;
-                             case 5:
-                                  while(counter5<callquan)//ciclo para asignacion de llamadas
-                                 {
-                                     callposition.setPosition(arregloautos2[5].callxcell.size()); //establecer posicion
-                                     position = callposition.getPosition();//guarda la posicion                     
-                                     arregloautos[arregloautos2[5].callxcell.get(position)].setCalls(landa);
-
-                                     counter5++;
-
-                                 }
-                                 break;
-                             case 6:
-                                  while(counter6<callquan)//ciclo para asignacion de llamadas
-                                 {
-                                     callposition.setPosition(arregloautos2[6].callxcell.size()); //establecer posicion
-                                     position = callposition.getPosition();//guarda la posicion                     
-                                     arregloautos[arregloautos2[6].callxcell.get(position)].setCalls(landa);
-
-                                     counter6++;
-
-                                 }
-                                 break;
-                             case 7:
-                                  while(counter7<callquan)//ciclo para asignacion de llamadas
-                                 {
-                                     callposition.setPosition(arregloautos2[7].callxcell.size()); //establecer posicion
-                                     position = callposition.getPosition();//guarda la posicion                     
-                                     arregloautos[arregloautos2[7].callxcell.get(position)].setCalls(landa);
-
-                                     counter7++;
-
-                                 }
-                                 break;
-                             case 8:
-                                  while(counter8<callquan)//ciclo para asignacion de llamadas
-                                 {
-                                     callposition.setPosition(arregloautos2[8].callxcell.size()); //establecer posicion
-                                     position = callposition.getPosition();//guarda la posicion                     
-                                     arregloautos[arregloautos2[8].callxcell.get(position)].setCalls(landa);
-
-                                     counter8++;
-
-                                 }
-                                 break;
-
-
-                         }
+                            counter1++;                   
+                        }                        
+                        //System.out.println(" lista de tiempos de arrivo vghgdfgdfgdfg " + arregloautos2[celllist].poissontimes);
+                        arregloautos2[celllist].poissontimes.add(lst);
+                        arregloautos[arregloautos2[celllist].callxcell.get(position)].I=0;
+                        arregloautos[arregloautos2[celllist].callxcell.get(position)].t=0;                                         
                     }
+                    
                }
+               
             }
             
-      
+            
             
             for (int j=0; j<autos ; j++ )			// Arreglo para almacenar los calculos del movimiento del auto en un punto medido
             {       
@@ -756,7 +670,7 @@
                         }*/
 
                         if(arregloautos[j].incomingcall==true && arregloautos[j].incall==false) // nueva llamada
-                        
+                        {
                             if (XY[i][2] >= 0 && XY[i][2] <= 180)
                             {
                                 if (channelX1<=availchannel)
@@ -834,7 +748,8 @@
                                      //System.out.println("Nueva llanada en X1-X2" + " " + j + " "+ channelX2);
                                      //System.out.println("Tiempo de generacion de llamada" + " " + arregloautos[j].bettime + " "+ j);
                                      //System.out.println(" Tiempo de llamada" + " " + arregloautos[j].calltimes);
-                                }  
+                                }
+                        }
                         else
 
                             if (XY[i][2]<=20)
@@ -2684,15 +2599,8 @@
                      
             }
 
-            counter0=0;
-            counter1=0;
-            counter2=0;
-            counter3=0;
-            counter4=0;
-            counter5=0;
-            counter6=0;
-            counter7=0;
-            counter8=0;
+            
+           
             cycle++;
             System.out.println( cycle );
             
@@ -2703,22 +2611,40 @@
         String time20=null;
         String speed = null;
         String Nohand = null;
+        String PoissonTimes =  null;
+        
         int a = 0;
         int b = 0;
         int c = 0;
         int d = 0;
         int e = 0;
         int g = 0;
+        int h = 0;
+        
+        
+        for(celllist=0; celllist<9; celllist++)
+        {
+            if (arregloautos2[celllist].poissontimes.size()>0)
+            {
+                fw9.write("Celda: " + celllist + "\n");
+                for (h = 0; h < arregloautos2[celllist].poissontimes.size(); h++) {                
+                    PoissonTimes = arregloautos2[celllist].poissontimes.get(h).toString();
+                    fw9.write(PoissonTimes + "\n");
+                }                
+                fw9.write("\n");
+            }
+        }        
+        
         
         for(int q=0; q<autos; q++)
         {
             
             fw2.write("Auto " + q);
-            fw4.write("Resoltime" + q);
-            fw7.write("Proba Auto" + q);
             fw3.write("Time 20mtrs" + q);
+            fw4.write("Resoltime" + q);
             fw5.write("Speed" + q);
-            fw8.write("NoHands" + q);
+            fw7.write("Proba Auto" + q);
+            fw8.write("NoHands" + q);            
             
            //System.out.println("estupides" + velocidad[q][2]); 
             
@@ -2763,7 +2689,7 @@
             
             
             
-                speed=arregloautos[q].speedValues.get(d).toString();
+                speed=arregloautos[q].speedValues.get(e).toString();
                 fw5.write("\t" + speed);
                 e++;
             
@@ -2778,6 +2704,7 @@
             g=0;
             fw8.write("\n");
             
+            
         }
         fw2.close();
         fw7.close();
@@ -2785,6 +2712,8 @@
         fw3.close();
         fw5.close();
         fw8.close();
+        fw9.close();
+        
         
        String totalsolix0 = Integer.toString(handsolix0);
        String totalhandoverx0 = Integer.toString(totalhandx0);
