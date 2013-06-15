@@ -43,6 +43,21 @@ public class Auto {
     double I=0;
     double s=0;
     
+    float speedX = 0;
+    float cellspeed = 0;
+    float celltime = 0;
+    float totaltravertime = 0;
+    float travertimeaux = 0;
+    ArrayList<Float> travertime = new ArrayList();
+    int speedcounterX1 = 0; // to keep the speed steps during the car cross the cell
+    int speedcounterX2 = 0;
+    int speedcounterX3 = 0;
+    int speedcounterY1 = 0; // to keep the speed steps during the car cross the cell
+    int speedcounterY2 = 0;
+    int speedcounterY3 = 0;
+    int n=0;
+    
+    
     
     ArrayList calltimetable = new ArrayList();
     ArrayList probabilitytable = new ArrayList();
@@ -53,6 +68,7 @@ public class Auto {
     ArrayList probabilityNoH = new ArrayList();
     ArrayList<Integer> callxcell = new ArrayList();
     ArrayList poissontimes = new ArrayList();
+   
     
     
     public boolean handsolpicX0=false;
@@ -174,6 +190,57 @@ public class Auto {
     {
         this.velocidad=velocidad;
     }
+        
+    public float getCellspeed()
+    {
+        return cellspeed;
+    }
+            
+    public void setCellspeed(int speedcounter, float Velocidad)
+    {
+      speedX = (Velocidad + speedX);
+      this.cellspeed = speedX/speedcounter;                       
+                             
+    }
+    
+    public float getCelltime()
+    {
+        return celltime;
+    }
+    
+    public void setCelltime(float cellspeed, int D)
+    {
+       this.celltime = D/cellspeed; 
+    }
+    
+    public float getTravertime()
+    {
+        return travertime.get(origin);
+    }
+
+    public float getTotaltravertime()
+    {
+        return totaltravertime;
+    }
+    public ArrayList getTraverlist()
+    {
+        return travertime;
+    }
+    public void setTravertime(float velocidad, int dres)
+        {
+            for (n=0; n<16; n++)
+            {
+                if (n==origin)   
+                {
+                    this.travertime.add(origin, dres/velocidad);                    
+                }
+                else 
+                    this.travertime.add(n, 0.0f);
+                
+            }
+            
+        }
+    
     public boolean getHandpicX1()
     {
         return handpicX1;
@@ -282,7 +349,7 @@ public class Auto {
     
     public void setProbability (double lowerbound, double upperbound)
     {
-        this.probability = tresol.cumulativeProbability(lowerbound, upperbound);
+        this.probability = tresol.probability(lowerbound, upperbound);
     }
     
     
@@ -349,30 +416,7 @@ public class Auto {
      }
     
      
-     /*public void setTiempores (double x, double y)
-             
-     {   
-         double pos =-1;
-         while (pos < 0)
-         {
-             ran=r.nextGaussian();
-             pos = (y * ran + x) + y;
-         }
-        this.tiempores= pos;
-     }
-            
-            
-    
-    /*public void main ()
-    {
-              Auto [] arregloautos = new Auto[5];   
-              arregloautos[1].coorX =5;
-              System.out.println(arregloautos[1].coorX);
-    }
-    
-   //  Auto arregloautos [] = new Auto[autos];
-     */    
-
+  
     
             
     
